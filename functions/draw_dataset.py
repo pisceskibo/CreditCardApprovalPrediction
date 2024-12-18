@@ -1,5 +1,5 @@
 # Thư viện cần thiết
-from data_analysis import value_cnt_norm_cal
+from functions.data_analysis import value_cnt_norm_cal
 import matplotlib
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -81,6 +81,7 @@ def create_box_plot(df, feature, cc_train_copy):
         fig, ax = plt.subplots(figsize=(2,8))
         sns.boxplot(y=np.abs(df[feature])/365.25)       # Chuẩn hóa đặc trưng tuổi
         plt.title('{} distribution(Boxplot)'.format(feature))
+        
         return plt.show()
     
     # Xử lý đặc trưng Children count
