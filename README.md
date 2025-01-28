@@ -7,7 +7,10 @@
 + Seaborn: trực quan hóa dữ liệu trên matplotlib (khai phá dữ liệu)
 + SciPy: thống kê, tối ưu hóa, đại số tính tuyến
 + Scikit-learn: xây dựng mô hình bằng các thuật toán học máy
++ Scikit-plot: vẽ đường cong ROC để vẽ các đối tượng từ scikit-learn
 + Imbalance-learn: kỹ thuật SMOTE để cân bằng các lớp phân loại (duyệt/không duyệt thẻ tín dụng)
++ MissingNo: trực quan hóa các dữ liệu bị thiếu trong dataframes
++ Warnings: kiểm soát các cảnh báo trong quá trình thực thi chương trình
 + Yellowbrick: thư viện mở rộng API lựa chọn mô hình
 + Pathlib: kiểm tra tệp có tồn tại tại một đường dẫn nhất định hay không và sử dụng joblib để lưu trữ tệp đó
 + Joblib: lưu trữ mô hình dạng tệp, triển khai trên AWS S3
