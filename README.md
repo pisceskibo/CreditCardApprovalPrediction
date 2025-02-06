@@ -14,3 +14,5 @@
 + Yellowbrick: thư viện mở rộng API lựa chọn mô hình
 + Pathlib: kiểm tra tệp có tồn tại tại một đường dẫn nhất định hay không và sử dụng joblib để lưu trữ tệp đó
 + Joblib: lưu trữ mô hình dạng tệp, triển khai trên AWS S3
+
+> Link báo cáo: https://www.overleaf.com/read/vpvjkpgtkmwj#2d0a89
