@@ -7,6 +7,7 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.neural_network import MLPClassifier
+import os
 
 
 # Training List of Models
@@ -25,3 +26,9 @@ classifiers = {
     'adaboost': AdaBoostClassifier(random_state=42),
     'extra_trees': ExtraTreesClassifier(random_state=42),
 }
+
+
+# Save the model in folder
+def folder_check_model(model_name):
+    if not os.path.exists('saved_models/{}'.format(model_name)):
+        os.makedirs('saved_models/{}'.format(model_name))
