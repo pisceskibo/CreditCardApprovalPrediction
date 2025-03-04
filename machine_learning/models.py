@@ -14,7 +14,7 @@ import os
 classifiers = {
     'sgd': SGDClassifier(random_state=42, loss='perceptron'),
     'logistic_regression': LogisticRegression(random_state=42, max_iter=1000),
-    'support_vector_machine': SVC(random_state=42, probability=True),
+    'support_vector_machine': SVC(random_state=42, probability=True),           # 1 hour
     'decision_tree': DecisionTreeClassifier(random_state=42),
     'random_forest': RandomForestClassifier(random_state=42),
     'gaussian_naive_bayes': GaussianNB(),
@@ -22,7 +22,7 @@ classifiers = {
     'gradient_boosting': GradientBoostingClassifier(random_state=42),
     'linear_discriminant_analysis': LinearDiscriminantAnalysis(),
     'bagging': BaggingClassifier(random_state=42),
-    'neural_network': MLPClassifier(random_state=42, max_iter=1000),
+    'neural_network': MLPClassifier(random_state=42, max_iter=1000),            # 1/4 hours
     'adaboost': AdaBoostClassifier(random_state=42),
     'extra_trees': ExtraTreesClassifier(random_state=42),
 }
