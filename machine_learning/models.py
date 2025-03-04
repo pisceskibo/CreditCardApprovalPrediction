@@ -10,7 +10,7 @@ from sklearn.neural_network import MLPClassifier
 import os
 
 
-# Training List of Models
+# Training List of Models (77p44s)
 classifiers = {
     'sgd': SGDClassifier(random_state=42, loss='perceptron'),
     'logistic_regression': LogisticRegression(random_state=42, max_iter=1000),
