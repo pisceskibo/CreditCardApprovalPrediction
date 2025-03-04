@@ -70,4 +70,16 @@ def train_model(model, model_name, X_cc_train_prep, y_cc_train_prep, final_model
         else:
             model_trn = joblib.load(final_model_file_path)
             return model_trn
-        
+
+
+# Classification models with Accuracy, Precision, Recall, ...
+def score_func(model_trn, model_name, X_cc_train_prep, y_cc_train_prep, final_model=False):
+    if final_model == False:
+        class_report = classification_report(y_cc_train_prep, y_prediction_func(model_trn, model_name,
+                                                                                X_cc_train_prep, y_cc_train_prep))
+        print(class_report)
+    else:
+        class_report_final = classification_report(y_cc_train_prep, y_prediction_func(model_trn, model_name,
+                                                                                      X_cc_train_prep, y_cc_train_prep,
+                                                                                      final_model=True))
+        print(class_report_final)
