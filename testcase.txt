@@ -1,2 +1,2 @@
-Approval:0 (22 tuổi) - Default value
+Approval: 0 (22 tuổi) - Default value
 Disapproval: 252521 (42 tuổi)
