@@ -3,6 +3,7 @@ import pandas as pd
 import streamlit as st
 from deployment.data_analysis import data_split
 
+
 # Training Data and Testing Data
 train_original = pd.read_csv('datasets/train.csv')
 test_original = pd.read_csv('datasets/test.csv')
