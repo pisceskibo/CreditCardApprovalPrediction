@@ -167,30 +167,30 @@ def profile_application(full_data, train_copy):
 
 # Predict for this application
 def make_prediction(profile_to_pred_prep):
-        """
-        Dự đoán kết quả từ mô hình Gradient Boosting Classifier đã lưu trên máy
-        """
-        try:
-            # Load model in local
-            model_path = "saved_models/gradient_boosting/gradient_boosting_model.sav"
-            model = joblib.load(model_path)
-            print("✅ Model loaded successfully!")
+    """
+    Dự đoán kết quả từ mô hình Gradient Boosting Classifier đã lưu trên máy
+    """
+    try:
+        # Load model in local
+        model_path = "saved_models/gradient_boosting/gradient_boosting_model.sav"
+        model = joblib.load(model_path)
+        print("✅ Model loaded successfully!")
 
-            # Change to dataframe
-            if isinstance(profile_to_pred_prep, pd.Series):
-                profile_to_pred_prep = profile_to_pred_prep.to_frame().T
+        # Change to dataframe
+        if isinstance(profile_to_pred_prep, pd.Series):
+            profile_to_pred_prep = profile_to_pred_prep.to_frame().T
 
-            # Predict
-            probabilities = model.predict_proba(profile_to_pred_prep)
-            prediction = model.predict(profile_to_pred_prep)
+        # Predict
+        probabilities = model.predict_proba(profile_to_pred_prep)
+        prediction = model.predict(profile_to_pred_prep)
 
-            print("📊 Probabilities (0, 1):", probabilities)
-            print("🎯 Final Prediction:", prediction)
+        print("📊 Probabilities (0, 1):", probabilities)
+        print("🎯 Final Prediction:", prediction)
 
-            return prediction
-        except FileNotFoundError:
-            print("❌ Model file not found! Please check the path")
-            return None
-        except Exception as e:
-            print(f"❌ An unexpected error occurred: {str(e)}")
-            return None
+        return prediction
+    except FileNotFoundError:
+        print("❌ Model file not found! Please check the path")
+        return None
+    except Exception as e:
+        print(f"❌ An unexpected error occurred: {str(e)}")
+        return None
