@@ -1,2 +1,3 @@
+*.pyx linguist-detectable=true
 *.pyx linguist-language=Cython
 *.py linguist-language=Python
