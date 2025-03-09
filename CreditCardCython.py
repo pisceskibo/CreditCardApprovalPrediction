@@ -4,6 +4,12 @@ import pandas as pd
 from cython_language import data_analysis, data_preprocessing, data_prediction
 import streamlit as st
 
+import sys
+import os
+
+project_path = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(project_path)
+
 
 # Training Data and Testing Data
 train_original = pd.read_csv('datasets/train.csv')
