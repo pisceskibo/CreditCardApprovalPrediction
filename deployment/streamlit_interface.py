@@ -1,8 +1,9 @@
 # Libraries for Machine Learning
 import numpy as np
 import pandas as pd
-import joblib
 import streamlit as st
+import joblib
+import re  
 
 # Module for Data Preprocessing
 from deployment.data_analysis import value_cnt_norm_cal
@@ -11,16 +12,23 @@ from deployment.data_preprocessing import full_pipeline
 
 # Profile for applications in Streamlit
 def profile_application(full_data, train_copy):
-    st.write("""# Credit Card approval prediction""")
+    st.write("""# Credit Card Approval Prediction""")
     st.write("""<hr style="border: 1px solid #ccc;">""", unsafe_allow_html=True)
+
+    # Name input
+    st.write("""## Fullname""")
+    fullname = st.text_input("Enter your fullname:")
+    if fullname:
+        if not re.fullmatch(r"[A-Za-zÀ-Ỹà-ỹ\s]+", fullname):  
+            st.warning("⚠️ Vui lòng nhập tên chỉ chứa chữ cái, không bao gồm số hoặc ký tự đặc biệt!")
 
     # Gender input
     st.write("""## Gender""")
-    input_gender = st.radio("Select you gender", ["Male", "Female"], index=0)
+    input_gender = st.radio("Select you gender:", ["Male", "Female"], index=0)
 
     # Age input slider
     st.write("""## Age""")
-    input_age = np.negative(st.slider("Select your age", value=22, min_value=18, max_value=70, step=1) * 365.25)
+    input_age = np.negative(st.slider("Select your age:", value=22, min_value=18, max_value=70, step=1) * 365.25)
 
     # Marital status input dropdown
     st.write("""## Marital status""")
