@@ -12,7 +12,7 @@ from deployment.data_preprocessing import full_pipeline
 
 # Profile for applications in Streamlit
 def profile_application(full_data, train_copy):
-    st.write("""# Credit Card Approval Prediction""")
+    st.write("""# Credit Card Approval Prediction 🏧""")
     st.write("""<hr style="border: 1px solid #ccc;">""", unsafe_allow_html=True)
 
     # Name input
