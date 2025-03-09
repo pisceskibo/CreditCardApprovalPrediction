@@ -2,12 +2,7 @@
 import numpy as np
 import pandas as pd
 import joblib
-
-# libraries for Web Interface
 import streamlit as st
-import json
-import requests
-from streamlit_lottie import st_lottie_spinner
 
 # Module for Data Preprocessing
 from deployment.data_analysis import value_cnt_norm_cal

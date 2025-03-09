@@ -1,12 +1,12 @@
 # Libraries 
 import pandas as pd
-import data_analysis
+from cython_language import data_analysis
 import streamlit as st
 
 
 # Training Data and Testing Data
-train_original = pd.read_csv('E:/CreditCardApprovalPrediction/datasets/train.csv')
-test_original = pd.read_csv('E:/CreditCardApprovalPrediction/datasets/test.csv')
+train_original = pd.read_csv('datasets/train.csv')
+test_original = pd.read_csv('datasets/test.csv')
 
 # Full Data merge
 full_data = pd.concat([train_original, test_original], axis=0)
