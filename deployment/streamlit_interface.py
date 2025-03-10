@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 import joblib
+import datetime
 import re  
 
 # Module for Data Preprocessing
@@ -15,51 +16,111 @@ def profile_application(full_data, train_copy):
     st.write("""# Credit Card Approval Prediction 🏧""")
     st.write("""<hr style="border: 1px solid #ccc;">""", unsafe_allow_html=True)
 
-    # Name input
+    # LABEL 1:
+    st.markdown(
+        """
+        <div style="text-align: center;">
+            <u><h3>📝 Thông tin cá nhân 📝</h3></u>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    """
+    Name input
+    """
     st.write("""## Fullname""")
     fullname = st.text_input("Enter your fullname:")
     if fullname:
         if not re.fullmatch(r"[A-Za-zÀ-Ỹà-ỹ\s]+", fullname):  
             st.warning("⚠️ Vui lòng nhập tên chỉ chứa chữ cái, không bao gồm số hoặc ký tự đặc biệt!")
 
-    # Gender input
+    """
+    Gender input
+    """
     st.write("""## Gender""")
-    input_gender = st.radio("Select you gender:", ["Male", "Female"], index=0)
+    col1, col2 = st.columns(2)
+    gender_options = ["Male", "Female"]
+    input_gender = col1.radio("Select your gender:", gender_options, index=0, horizontal=True)
+    st.write(f"**Selected Gender:** {input_gender}")
 
-    # Age input slider
+    # Age and Year input slider
     st.write("""## Age""")
-    input_age = np.negative(st.slider("Select your age:", value=22, min_value=18, max_value=70, step=1) * 365.25)
+    current_year = datetime.datetime.now().year
+    col1, col2 = st.columns(2)
 
-    # Marital status input dropdown
+    # Using session_state to be synchronized value
+    if "year_of_birth" not in st.session_state:
+        st.session_state.year_of_birth = current_year - 22
+    if "input_age" not in st.session_state:
+        st.session_state.input_age = 22
+
+    # Updated function
+    def update_year():
+        st.session_state.year_of_birth = current_year - st.session_state.input_age
+    def update_age():
+        st.session_state.input_age = current_year - st.session_state.year_of_birth
+
+    year_of_birth = col1.number_input("Enter your year of birth:", min_value=current_year - 70, max_value=current_year - 18,
+                    value=st.session_state.year_of_birth, step=1, key="year_of_birth", on_change=update_age)
+    input_age = col2.slider("Select your age:", min_value=18, max_value=70, 
+                    value=st.session_state.input_age, step=1, key="input_age", on_change=update_year)
+
+    st.write(f"**Selected Age:** {input_age} years")
+    st.write(f"**Year of Birth:** {year_of_birth}")
+    
+
+    # LABEL 2:
+    st.write("""<hr style="border: 1px dashed #ccc;">""", unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div style="text-align: center;">
+            <u><h3>📑 Thông tin tình trạng quan hệ 📑</h3></u>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    
+    """
+    Marital status input dropdown
+    """
     st.write("""## Marital status""")
     marital_status_values = list(value_cnt_norm_cal(full_data, "Marital status").index)
     marital_status_key = ["Married", "Single/not married", "Civil marriage", "Separated", "Widowed"]
     marital_status_dict = dict(zip(marital_status_key, marital_status_values))
-    input_marital_status_key = st.selectbox("Select your marital status", marital_status_key)
+    input_marital_status_key = st.selectbox("Select your marital status:", marital_status_key)
     input_marital_status_val = marital_status_dict.get(input_marital_status_key)
 
     # Family member count
     st.write("""## Family member count""")
-    fam_member_count = float(st.selectbox("Select your family member count", [1, 2, 3, 4, 5, 6]))
+    fam_member_count = float(st.selectbox("Select your family member count:", [1, 2, 3, 4, 5, 6]))
 
-    # Dwelling type dropdown
+
+    # LABEL 3:
+    st.write("""<hr style="border: 1px dashed #ccc;">""", unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div style="text-align: center;">
+            <u><h3>💰 Thông tin tài sản và nguồn thu nhập 💰</h3></u>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    """
+    Dwelling type dropdown
+    """
     st.write("""## Dwelling type""")
     dwelling_type_values = list(value_cnt_norm_cal(full_data, "Dwelling").index)
-    dwelling_type_key = [
-        "House / apartment",
-        "Live with parents",
-        "Municipal apartment ",
-        "Rented apartment",
-        "Office apartment",
-        "Co-op apartment",
-    ]
+    dwelling_type_key = ["House / apartment", "Live with parents", "Municipal apartment", 
+                         "Rented apartment", "Office apartment", "Co-op apartment"]
     dwelling_type_dict = dict(zip(dwelling_type_key, dwelling_type_values))
-    input_dwelling_type_key = st.selectbox("Select the type of dwelling you reside in", dwelling_type_key)
+    input_dwelling_type_key = st.selectbox("Select the type of dwelling:", dwelling_type_key)
     input_dwelling_type_val = dwelling_type_dict.get(input_dwelling_type_key)
 
     # Income
     st.write("""## Income""")
-    input_income = int(st.text_input("Enter your income (in USD)", 0))
+    input_income = int(st.text_input("Enter your income (in USD):", 0))
 
     # Employment status dropdown
     st.write("""## Employment status""")
