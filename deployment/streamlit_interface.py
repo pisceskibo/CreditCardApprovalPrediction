@@ -63,10 +63,11 @@ def profile_application(full_data, train_copy):
 
     year_of_birth = col1.number_input("Enter your year of birth:", min_value=current_year - 70, max_value=current_year - 18,
                     value=st.session_state.year_of_birth, step=1, key="year_of_birth", on_change=update_age)
-    input_age = col2.slider("Select your age:", min_value=18, max_value=70, 
+    age = col2.slider("Select your age:", min_value=18, max_value=70, 
                     value=st.session_state.input_age, step=1, key="input_age", on_change=update_year)
+    input_age = np.negative(age*365.25)
 
-    st.write(f"**Selected Age:** {input_age} years")
+    st.write(f"**Selected Age:** {age} years")
     st.write(f"**Year of Birth:** {year_of_birth}")
     
 
@@ -118,55 +119,96 @@ def profile_application(full_data, train_copy):
     input_dwelling_type_key = st.selectbox("Select the type of dwelling:", dwelling_type_key)
     input_dwelling_type_val = dwelling_type_dict.get(input_dwelling_type_key)
 
-    # Income
+    """
+    Income
+    """
     st.write("""## Income""")
     input_income = int(st.text_input("Enter your income (in USD):", 0))
 
-    # Employment status dropdown
-    st.write("""## Employment status""")
-    employment_status_values = list(value_cnt_norm_cal(full_data, "Employment status").index)
-    employment_status_key = ["Working", "Commercial associate", "Pensioner", "State servant", "Student"]
-    employment_status_dict = dict(zip(employment_status_key, employment_status_values))
-    input_employment_status_key = st.selectbox("Select your employment status", employment_status_key)
-    input_employment_status_val = employment_status_dict.get(input_employment_status_key)
+    """
+    Ownship Information = Car ownship + Property ownship
+    """
+    st.write("## Ownship Information")
+    col1, col2 = st.columns(2)
+    with col1:
+        # Car ownship input
+        input_car_ownship = st.radio("Do you own a car?", ["Yes", "No"], index=0)
+    with col2:
+        # Property ownship input
+        input_prop_ownship = st.radio("Do you own a property?", ["Yes", "No"], index=0)
 
-    # Employment length input slider
-    st.write("""## Employment length""")
-    input_employment_length = np.negative(
-        st.slider(
-            "Select your employment length", value=6, min_value=0, max_value=30, step=1
-        ) * 365.25
+    
+    # LABEL 4:
+    st.write("""<hr style="border: 1px dashed #ccc;">""", unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div style="text-align: center;">
+            <u><h3>🛠️ Thông tin kinh nghiệm làm việc 🛠️</h3></u>
+        </div>
+        """,
+        unsafe_allow_html=True
     )
 
-    # Education level dropdown
+    """
+    Employment status dropdown and Employment length
+    """
+    st.write("## Employment Information")
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        # Employment status dropdown    
+        employment_status_values = list(value_cnt_norm_cal(full_data, "Employment status").index)
+        employment_status_key = ["Working", "Commercial associate", "Pensioner", "State servant", "Student"]
+        employment_status_dict = dict(zip(employment_status_key, employment_status_values))
+        input_employment_status_key = st.selectbox("Select your employment status:", employment_status_key)
+        input_employment_status_val = employment_status_dict.get(input_employment_status_key)
+    with col2:
+        # Employment length slider
+        input_employment_length = np.negative(
+            st.slider("Select your employment length:", value=6, min_value=0, max_value=30, step=1) * 365.25
+        )
+
+    """
+    Education level dropdown
+    """
     st.write("""## Education level""")
     edu_level_values = list(value_cnt_norm_cal(full_data, "Education level").index)
     edu_level_key = ["Secondary school", "Higher education", "Incomplete higher", "Lower secondary", "Academic degree"]
     edu_level_dict = dict(zip(edu_level_key, edu_level_values))
-    input_edu_level_key = st.selectbox("Select your education status", edu_level_key)
+    input_edu_level_key = st.selectbox("Select your education status:", edu_level_key)
     input_edu_level_val = edu_level_dict.get(input_edu_level_key)
 
-    # Car ownship input
-    st.write("""## Car ownship""")
-    input_car_ownship = st.radio("Do you own a car?", ["Yes", "No"], index=0)
 
-    # Property ownship input
-    st.write("""## Property ownship""")
-    input_prop_ownship = st.radio("Do you own a property?", ["Yes", "No"], index=0)
+    # LABEL 5:
+    st.write("""<hr style="border: 1px dashed #ccc;">""", unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div style="text-align: center;">
+            <u><h3>📠 Thông tin liên hệ 📠</h3></u>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
-    # Work phone input
+    """
+    Work phone input
+    """
     st.write("""## Work phone""")
     input_work_phone = st.radio("Do you have a work phone?", ["Yes", "No"], index=0)
     work_phone_dict = {"Yes": 1, "No": 0}
     work_phone_val = work_phone_dict.get(input_work_phone)
 
-    # Phone input
+    """
+    Phone input
+    """
     st.write("""## Phone""")
     input_phone = st.radio("Do you have a phone?", ["Yes", "No"], index=0)
     work_dict = {"Yes": 1, "No": 0}
     phone_val = work_dict.get(input_phone)
 
-    # Email input
+    """
+    Email input
+    """
     st.write("""## Email""")
     input_email = st.radio("Do you have an email?", ["Yes", "No"], index=0)
     email_dict = {"Yes": 1, "No": 0}
