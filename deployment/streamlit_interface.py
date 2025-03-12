@@ -6,6 +6,10 @@ import joblib
 import datetime
 import re  
 
+# Module for Image
+from PIL import Image
+from deployment.draw_image_formatter import make_circle
+
 # Module for Data Preprocessing
 from deployment.data_analysis import value_cnt_norm_cal
 from deployment.data_preprocessing import full_pipeline
@@ -16,7 +20,30 @@ def profile_application(full_data, train_copy):
     st.write("""# Credit Card Approval Prediction 🏧""")
     st.write("""<hr style="border: 1px solid #ccc;">""", unsafe_allow_html=True)
 
+    # LABEL 0:
+    st.markdown(
+        """
+        <div style="text-align: center;">
+            <u><h3>📷 Avatar Picture 📷</h3></u>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png", "jpeg"])
+    if uploaded_file is not None:
+        image = Image.open(uploaded_file)
+        rounded_image = make_circle(image)
+
+        col1, col2, col3 = st.columns([1, 2, 1])  
+        with col2:
+            st.image(rounded_image, caption=uploaded_file.name, use_container_width=False)
+    else:
+        st.write("📌 Please upload your profile image")
+
+
     # LABEL 1:
+    st.write("""<hr style="border: 1px dashed #ccc;">""", unsafe_allow_html=True)
     st.markdown(
         """
         <div style="text-align: center;">
@@ -172,12 +199,19 @@ def profile_application(full_data, train_copy):
     Education level dropdown
     """
     st.write("""## Education level""")
-    edu_level_values = list(value_cnt_norm_cal(full_data, "Education level").index)
-    edu_level_key = ["Secondary school", "Higher education", "Incomplete higher", "Lower secondary", "Academic degree"]
-    edu_level_dict = dict(zip(edu_level_key, edu_level_values))
-    input_edu_level_key = st.selectbox("Select your education status:", edu_level_key)
-    input_edu_level_val = edu_level_dict.get(input_edu_level_key)
+    col1, col2 = st.columns(2)
 
+    with col1:
+        edu_level_values = list(value_cnt_norm_cal(full_data, "Education level").index)
+        edu_level_key = ["Secondary school", "Higher education", "Incomplete higher", "Lower secondary", "Academic degree"]
+        edu_level_dict = dict(zip(edu_level_key, edu_level_values))
+        input_edu_level_key = st.selectbox("Select your education status:", edu_level_key)
+        input_edu_level_val = edu_level_dict.get(input_edu_level_key)
+    with col2:
+        job_title_majority = st.text_input("Job Title (Majority):")
+        if job_title_majority:
+            if not re.fullmatch(r"[A-Za-zÀ-Ỹà-ỹ\s]+", job_title_majority):  
+                st.warning("⚠️ Không bao gồm số hoặc ký tự đặc biệt!")
 
     # LABEL 5:
     st.write("""<hr style="border: 1px dashed #ccc;">""", unsafe_allow_html=True)
@@ -194,25 +228,57 @@ def profile_application(full_data, train_copy):
     Work phone input
     """
     st.write("""## Work phone""")
-    input_work_phone = st.radio("Do you have a work phone?", ["Yes", "No"], index=0)
-    work_phone_dict = {"Yes": 1, "No": 0}
-    work_phone_val = work_phone_dict.get(input_work_phone)
+    col1, col2 = st.columns(2)
+
+    with col1:
+        input_work_phone = st.radio("Do you have a work phone?", ["Yes", "No"], index=0)
+        work_phone_dict = {"Yes": 1, "No": 0}
+        work_phone_val = work_phone_dict.get(input_work_phone)
+    with col2:
+        if work_phone_val == 1:
+            work_phone_number = st.text_input("Enter your work phone number:", "")
+            if work_phone_number and not work_phone_number.isdigit():
+                st.error("❌ Please enter numbers only!")
+        else:
+            work_phone_number = None  # Không nhập số điện thoại khi chọn "No"
 
     """
     Phone input
     """
     st.write("""## Phone""")
-    input_phone = st.radio("Do you have a phone?", ["Yes", "No"], index=0)
-    work_dict = {"Yes": 1, "No": 0}
-    phone_val = work_dict.get(input_phone)
+    col1, col2 = st.columns(2)
+
+    with col1:
+        input_phone = st.radio("Do you have a phone?", ["Yes", "No"], index=0)
+        work_dict = {"Yes": 1, "No": 0}
+        phone_val = work_dict.get(input_phone)
+    with col2:
+        if phone_val == 1:
+            phone_val_number = st.text_input("Enter your phone number:", "")
+            if phone_val_number and not phone_val_number.isdigit():
+                st.error("❌ Please enter numbers only!")
+        else:
+            phone_val_number = None
 
     """
     Email input
     """
     st.write("""## Email""")
-    input_email = st.radio("Do you have an email?", ["Yes", "No"], index=0)
-    email_dict = {"Yes": 1, "No": 0}
-    email_val = email_dict.get(input_email)
+    col1, col2 = st.columns(2)
+
+    with col1:
+        input_email = st.radio("Do you have an email?", ["Yes", "No"], index=0)
+        email_dict = {"Yes": 1, "No": 0}
+        email_val = email_dict.get(input_email)
+    with col2:
+        if email_val == 1:
+            email_val_string = st.text_input("Enter your email:", "")
+            email_pattern = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+            if email_val_string and not re.match(email_pattern, email_val_string):
+                st.error("❌ Please enter a valid email address!")
+        else:
+            email_val_string = None
+
 
     # Button
     st.write("""<hr style="border: 1px solid #ccc;">""", unsafe_allow_html=True)
@@ -261,26 +327,24 @@ def profile_application(full_data, train_copy):
         train_copy_with_profile_to_pred_prep["ID"] == 0
     ].drop(columns=["ID", "Is high risk"])
 
-
-    # Button Click for Predict
+    """
+    Button Click for Predict
+    """
     if predict_bt:
         final_pred = make_prediction(profile_to_pred_prep)
 
         if final_pred is not None:
             if final_pred[0] == 0:
-                st.success("## You have been approved for a credit card")
+                st.success("### ✅ You have been approved for a credit card!")
                 st.balloons()
             else:
-                st.error("## Unfortunately, you have not been approved for a credit card")
+                st.error("### ❌ You have not been approved for a credit card!")
         else:
-            st.error("❌ Error: Unable to make a prediction.")
+            st.error("❗⚠️ Error: Unable to make a prediction.")
 
 
-# Predict for this application
+# Predict for this application (Gradient Boosting Classifier)
 def make_prediction(profile_to_pred_prep):
-    """
-    Dự đoán kết quả từ mô hình Gradient Boosting Classifier đã lưu trên máy
-    """
     try:
         # Load model in local
         model_path = "saved_models/gradient_boosting/gradient_boosting_model.sav"
@@ -300,7 +364,7 @@ def make_prediction(profile_to_pred_prep):
 
         return prediction
     except FileNotFoundError:
-        print("❌ Model file not found! Please check the path")
+        print("❌ Model file not found!")
         return None
     except Exception as e:
         print(f"❌ An unexpected error occurred: {str(e)}")
