@@ -11,6 +11,7 @@ from PIL import Image
 from deployment.draw_image_formatter import make_circle
 
 # Module for Data Preprocessing
+from deployment.profile_credit_card import PersonalInformation, RelationshipInformation, OwnIncome, ExperienceInformation, ContactInformation, ProfileCreditCard
 from deployment.data_analysis import value_cnt_norm_cal
 from deployment.data_preprocessing import full_pipeline
 
@@ -30,6 +31,9 @@ def profile_application(full_data, train_copy):
         unsafe_allow_html=True
     )
 
+    """
+    Upload Avatar
+    """
     uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png", "jpeg"])
     if uploaded_file is not None:
         image = Image.open(uploaded_file)
@@ -37,8 +41,10 @@ def profile_application(full_data, train_copy):
 
         col1, col2, col3 = st.columns([1, 2, 1])  
         with col2:
+            uploaded_file_name = uploaded_file.name
             st.image(rounded_image, caption=uploaded_file.name, use_container_width=False)
     else:
+        uploaded_file_name = None
         st.write("📌 Please upload your profile image")
 
 
@@ -71,7 +77,9 @@ def profile_application(full_data, train_copy):
     input_gender = col1.radio("Select your gender:", gender_options, index=0, horizontal=True)
     st.write(f"**Selected Gender:** {input_gender}")
 
-    # Age and Year input slider
+    """
+    Age and Year input slider
+    """
     st.write("""## Age""")
     current_year = datetime.datetime.now().year
     col1, col2 = st.columns(2)
@@ -97,6 +105,13 @@ def profile_application(full_data, train_copy):
     st.write(f"**Selected Age:** {age} years")
     st.write(f"**Year of Birth:** {year_of_birth}")
     
+    """LABEL 1"""
+    profile_personal_information = PersonalInformation(gender=input_gender, 
+                                                       age=input_age, 
+                                                       year_of_birth=year_of_birth, 
+                                                       full_name=fullname)
+    """LABEL 1"""
+
 
     # LABEL 2:
     st.write("""<hr style="border: 1px dashed #ccc;">""", unsafe_allow_html=True)
@@ -119,9 +134,16 @@ def profile_application(full_data, train_copy):
     input_marital_status_key = st.selectbox("Select your marital status:", marital_status_key)
     input_marital_status_val = marital_status_dict.get(input_marital_status_key)
 
-    # Family member count
+    """
+    Family member count
+    """
     st.write("""## Family member count""")
     fam_member_count = float(st.selectbox("Select your family member count:", [1, 2, 3, 4, 5, 6]))
+
+    """LABEL 2"""
+    profile_relationship_information = RelationshipInformation(material_status=input_marital_status_val, 
+                                                               family_member_count=fam_member_count)
+    """LABEL 2"""
 
 
     # LABEL 3:
@@ -145,7 +167,7 @@ def profile_application(full_data, train_copy):
     dwelling_type_dict = dict(zip(dwelling_type_key, dwelling_type_values))
     input_dwelling_type_key = st.selectbox("Select the type of dwelling:", dwelling_type_key)
     input_dwelling_type_val = dwelling_type_dict.get(input_dwelling_type_key)
-
+    
     """
     Income
     """
@@ -164,7 +186,14 @@ def profile_application(full_data, train_copy):
         # Property ownship input
         input_prop_ownship = st.radio("Do you own a property?", ["Yes", "No"], index=0)
 
+    """LABEL 3"""
+    profile_own_income = OwnIncome(dwelling_type=input_dwelling_type_val, 
+                                   income=input_income, 
+                                   car_ownship=input_car_ownship, 
+                                   property_ownship=input_prop_ownship)
+    """LABEL 3"""
     
+
     # LABEL 4:
     st.write("""<hr style="border: 1px dashed #ccc;">""", unsafe_allow_html=True)
     st.markdown(
@@ -212,6 +241,17 @@ def profile_application(full_data, train_copy):
         if job_title_majority:
             if not re.fullmatch(r"[A-Za-zÀ-Ỹà-ỹ\s]+", job_title_majority):  
                 st.warning("⚠️ Không bao gồm số hoặc ký tự đặc biệt!")
+        else:
+            job_title_majority = "to_be_droped"
+
+    
+    """LABEL 4"""
+    profile_experience_information = ExperienceInformation(employment_status=input_employment_status_val, 
+                                                           employment_length=input_employment_length, 
+                                                           education_level=input_edu_level_val, 
+                                                           job_title=job_title_majority)
+    """LABEL 4"""
+
 
     # LABEL 5:
     st.write("""<hr style="border: 1px dashed #ccc;">""", unsafe_allow_html=True)
@@ -240,7 +280,7 @@ def profile_application(full_data, train_copy):
             if work_phone_number and not work_phone_number.isdigit():
                 st.error("❌ Please enter numbers only!")
         else:
-            work_phone_number = None  # Không nhập số điện thoại khi chọn "No"
+            work_phone_number = None 
 
     """
     Phone input
@@ -278,6 +318,15 @@ def profile_application(full_data, train_copy):
                 st.error("❌ Please enter a valid email address!")
         else:
             email_val_string = None
+    
+    """LABEL 5"""
+    profile_contact_information = ContactInformation(work_phone=work_phone_val, 
+                                                     phone=phone_val,
+                                                     email=email_val, 
+                                                     work_phone_number=work_phone_number, 
+                                                     phone_number=phone_val_number, 
+                                                     email_string=email_val_string)
+    """LABEL 5"""
 
 
     # Button
@@ -292,28 +341,13 @@ def profile_application(full_data, train_copy):
     predict_bt = st.button("Predict")
 
     # list of all the input variables
-    profile_to_predict = [
-        0,                                  # ID
-        input_gender[:1],                   # Gender
-        input_car_ownship[:1],              # Car Ownership
-        input_prop_ownship[:1],             # Property Ownership
-        0,                                  # Children count (which will be dropped in the pipeline)
-        input_income,                       # Income
-        input_employment_status_val,        # Employment status
-        input_edu_level_val,                # Education Level
-        input_marital_status_val,           # Marital Status
-        input_dwelling_type_val,            # Dwelling Type
-        input_age,                          # Age
-        input_employment_length,            # Employment Length
-        1,                                  # Has a mobile phone (which will be dropped in the pipeline)
-        work_phone_val,                     # Work Phone
-        phone_val,                          # Phone
-        email_val,                          # Email
-        "to_be_droped",                     # Job Title (which will be dropped in the pipeline)
-        fam_member_count,                   # Family Member Count
-        0.00,                               # Account Age (which will be dropped in the pipeline)
-        0,                                  # Target set to 0 as a placeholder
-    ]
+    profile_to_predict_object = ProfileCreditCard(uploaded_file_name=uploaded_file_name,
+                                            personal_information=profile_personal_information,
+                                            relationship_information=profile_relationship_information,
+                                            own_income=profile_own_income,
+                                            experience_information=profile_experience_information,
+                                            contact_information=profile_contact_information)
+    profile_to_predict = profile_to_predict_object.get_list_profile_predict()
 
     # Set this application to dataframe
     profile_to_predict_df = pd.DataFrame([profile_to_predict], columns=train_copy.columns)
