@@ -42,7 +42,7 @@ def profile_application(full_data, train_copy):
         col1, col2, col3 = st.columns([1, 2, 1])  
         with col2:
             uploaded_file_name = uploaded_file.name
-            st.image(rounded_image, caption=uploaded_file.name, use_container_width=False)
+            st.image(rounded_image, caption=uploaded_file_name, use_container_width=False)
     else:
         uploaded_file_name = None
         st.write("📌 Please upload your profile image")
@@ -244,7 +244,6 @@ def profile_application(full_data, train_copy):
         else:
             job_title_majority = "to_be_droped"
 
-    
     """LABEL 4"""
     profile_experience_information = ExperienceInformation(employment_status=input_employment_status_val, 
                                                            employment_length=input_employment_length, 

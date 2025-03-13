@@ -20,5 +20,4 @@ test_copy = test_original.copy()
 
 # Deploy the model
 from deployment import streamlit_interface
-
 streamlit_interface.profile_application(full_data, train_copy)
