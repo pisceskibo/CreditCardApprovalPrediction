@@ -11,9 +11,12 @@
 
 > Link báo cáo: https://www.overleaf.com/read/vpvjkpgtkmwj#2d0a89
 
-+ `CreditCard.ipynb` sử dụng folder `machine_learning/`
-+ `CreditCard.py` sử dụng folder `deployment/`
-+ `CreditCardCython.py` sử dụng folder `cython_language/`
-+ `CreditCardEnsembleLearning.ipynb` sử dụng folder `machine_learning/` và `ensemble_learning/`
+
+| File | Folder sử dụng | Chức năng |
+|-|-|-|
+| `CreditCard.ipynb` | `machine_learning/` | Analysis |
+| `CreditCard.py` | `deployment/` | Deploy Web (Final) |
+| `CreditCardCython.py` | `cython_language/` | Deploy Web |
+| `CreditCardEnsembleLearning.ipynb` | `machine_learning/`, `cython_language/`, `ensemble_learning/` | Ensemble Learning |
 
 > Demo Web: https://creditcardapprovalpredictiondeployment.streamlit.app/ 
