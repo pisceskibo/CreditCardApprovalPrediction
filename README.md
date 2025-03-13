@@ -11,7 +11,6 @@
 
 > Link báo cáo: https://www.overleaf.com/read/vpvjkpgtkmwj#2d0a89
 
-
 | File | Folder sử dụng | Chức năng |
 |-|-|-|
 | `CreditCard.ipynb` | `machine_learning/` | Analysis |
