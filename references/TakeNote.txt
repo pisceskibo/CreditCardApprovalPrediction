@@ -1,0 +1,21 @@
+=> Kết hợp thêm Scoring Credit Card: https://rpubs.com/ngyongkad/scorecard
+
+Phần 1: Giới thiệu bài toán, dữ liệu, mô hình (10 trang) 
++ Giới thiệu chung về bài toán
++ Lộ trình thực hiện
++ Tổng quan bộ dữ liệu
+
+Phần 2: Giới thiệu một số mô hình cần dùng đến: Thuật toán, .... (10 trang)
++ Khai phá và Phân tích dữ liệu: đơn biến, đa biến, phương sai
++ Khởi tạo biến mục tiêu
++ Xử lý và làm sạch dữ liệu: Xử lý outlier, feature selection, feature engineering
++ Tiền xử lý dữ liệu
+
+Phần 3: Lựa chọn và huấn luyện mô hình (10 trang)
++ Mô hình Gradient Boosting
++ Mô hình Bagging
++ Mô hình Stacking
+
+Phần 4: Thực nghiệm dữ liệu + Triển khai mô hình (10 trang)
++ Chạy code và show hình ảnh
++ Triển khai mô hình 
