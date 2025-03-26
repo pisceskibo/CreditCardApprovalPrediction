@@ -2080,6 +2080,7 @@ static const char __pyx_k_format[] = "format";
 static const char __pyx_k_import[] = "__import__";
 static const char __pyx_k_bagging[] = "bagging";
 static const char __pyx_k_makedirs[] = "makedirs";
+static const char __pyx_k_max_iter[] = "max_iter";
 static const char __pyx_k_model_name[] = "model_name";
 static const char __pyx_k_initializing[] = "_initializing";
 static const char __pyx_k_is_coroutine[] = "_is_coroutine";
@@ -2088,10 +2089,13 @@ static const char __pyx_k_sklearn_tree[] = "sklearn.tree";
 static const char __pyx_k_sklearn_ensemble[] = "sklearn.ensemble";
 static const char __pyx_k_BaggingClassifier[] = "BaggingClassifier";
 static const char __pyx_k_gradient_boosting[] = "gradient_boosting";
+static const char __pyx_k_LogisticRegression[] = "LogisticRegression";
 static const char __pyx_k_StackingClassifier[] = "StackingClassifier";
 static const char __pyx_k_asyncio_coroutines[] = "asyncio.coroutines";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 static const char __pyx_k_folder_check_model[] = "folder_check_model";
+static const char __pyx_k_logistic_regression[] = "logistic_regression";
+static const char __pyx_k_sklearn_linear_model[] = "sklearn.linear_model";
 static const char __pyx_k_saved_ensemble_models[] = "saved_ensemble_models/{}";
 static const char __pyx_k_DecisionTreeClassifier[] = "DecisionTreeClassifier";
 static const char __pyx_k_model_ensemble_learning[] = "model_ensemble_learning";
@@ -2134,6 +2138,7 @@ typedef struct {
   PyObject *__pyx_n_s_BaggingClassifier;
   PyObject *__pyx_n_s_DecisionTreeClassifier;
   PyObject *__pyx_n_s_GradientBoostingClassifier;
+  PyObject *__pyx_n_s_LogisticRegression;
   PyObject *__pyx_n_s_StackingClassifier;
   PyObject *__pyx_n_s__2;
   PyObject *__pyx_n_s__6;
@@ -2148,8 +2153,10 @@ typedef struct {
   PyObject *__pyx_n_s_import;
   PyObject *__pyx_n_s_initializing;
   PyObject *__pyx_n_s_is_coroutine;
+  PyObject *__pyx_n_s_logistic_regression;
   PyObject *__pyx_n_s_main;
   PyObject *__pyx_n_s_makedirs;
+  PyObject *__pyx_n_s_max_iter;
   PyObject *__pyx_n_s_model_ensemble_learning;
   PyObject *__pyx_kp_s_model_ensemble_learning_pyx;
   PyObject *__pyx_n_s_model_name;
@@ -2159,10 +2166,12 @@ typedef struct {
   PyObject *__pyx_n_s_random_state;
   PyObject *__pyx_kp_s_saved_ensemble_models;
   PyObject *__pyx_n_s_sklearn_ensemble;
+  PyObject *__pyx_n_s_sklearn_linear_model;
   PyObject *__pyx_n_s_sklearn_tree;
   PyObject *__pyx_n_s_spec;
   PyObject *__pyx_n_s_test;
   PyObject *__pyx_int_42;
+  PyObject *__pyx_int_1000;
   PyObject *__pyx_tuple__4;
   PyObject *__pyx_codeobj__3;
   PyObject *__pyx_codeobj__5;
@@ -2212,6 +2221,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_BaggingClassifier);
   Py_CLEAR(clear_module_state->__pyx_n_s_DecisionTreeClassifier);
   Py_CLEAR(clear_module_state->__pyx_n_s_GradientBoostingClassifier);
+  Py_CLEAR(clear_module_state->__pyx_n_s_LogisticRegression);
   Py_CLEAR(clear_module_state->__pyx_n_s_StackingClassifier);
   Py_CLEAR(clear_module_state->__pyx_n_s__2);
   Py_CLEAR(clear_module_state->__pyx_n_s__6);
@@ -2226,8 +2236,10 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_import);
   Py_CLEAR(clear_module_state->__pyx_n_s_initializing);
   Py_CLEAR(clear_module_state->__pyx_n_s_is_coroutine);
+  Py_CLEAR(clear_module_state->__pyx_n_s_logistic_regression);
   Py_CLEAR(clear_module_state->__pyx_n_s_main);
   Py_CLEAR(clear_module_state->__pyx_n_s_makedirs);
+  Py_CLEAR(clear_module_state->__pyx_n_s_max_iter);
   Py_CLEAR(clear_module_state->__pyx_n_s_model_ensemble_learning);
   Py_CLEAR(clear_module_state->__pyx_kp_s_model_ensemble_learning_pyx);
   Py_CLEAR(clear_module_state->__pyx_n_s_model_name);
@@ -2237,10 +2249,12 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_random_state);
   Py_CLEAR(clear_module_state->__pyx_kp_s_saved_ensemble_models);
   Py_CLEAR(clear_module_state->__pyx_n_s_sklearn_ensemble);
+  Py_CLEAR(clear_module_state->__pyx_n_s_sklearn_linear_model);
   Py_CLEAR(clear_module_state->__pyx_n_s_sklearn_tree);
   Py_CLEAR(clear_module_state->__pyx_n_s_spec);
   Py_CLEAR(clear_module_state->__pyx_n_s_test);
   Py_CLEAR(clear_module_state->__pyx_int_42);
+  Py_CLEAR(clear_module_state->__pyx_int_1000);
   Py_CLEAR(clear_module_state->__pyx_tuple__4);
   Py_CLEAR(clear_module_state->__pyx_codeobj__3);
   Py_CLEAR(clear_module_state->__pyx_codeobj__5);
@@ -2268,6 +2282,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_BaggingClassifier);
   Py_VISIT(traverse_module_state->__pyx_n_s_DecisionTreeClassifier);
   Py_VISIT(traverse_module_state->__pyx_n_s_GradientBoostingClassifier);
+  Py_VISIT(traverse_module_state->__pyx_n_s_LogisticRegression);
   Py_VISIT(traverse_module_state->__pyx_n_s_StackingClassifier);
   Py_VISIT(traverse_module_state->__pyx_n_s__2);
   Py_VISIT(traverse_module_state->__pyx_n_s__6);
@@ -2282,8 +2297,10 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_import);
   Py_VISIT(traverse_module_state->__pyx_n_s_initializing);
   Py_VISIT(traverse_module_state->__pyx_n_s_is_coroutine);
+  Py_VISIT(traverse_module_state->__pyx_n_s_logistic_regression);
   Py_VISIT(traverse_module_state->__pyx_n_s_main);
   Py_VISIT(traverse_module_state->__pyx_n_s_makedirs);
+  Py_VISIT(traverse_module_state->__pyx_n_s_max_iter);
   Py_VISIT(traverse_module_state->__pyx_n_s_model_ensemble_learning);
   Py_VISIT(traverse_module_state->__pyx_kp_s_model_ensemble_learning_pyx);
   Py_VISIT(traverse_module_state->__pyx_n_s_model_name);
@@ -2293,10 +2310,12 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_random_state);
   Py_VISIT(traverse_module_state->__pyx_kp_s_saved_ensemble_models);
   Py_VISIT(traverse_module_state->__pyx_n_s_sklearn_ensemble);
+  Py_VISIT(traverse_module_state->__pyx_n_s_sklearn_linear_model);
   Py_VISIT(traverse_module_state->__pyx_n_s_sklearn_tree);
   Py_VISIT(traverse_module_state->__pyx_n_s_spec);
   Py_VISIT(traverse_module_state->__pyx_n_s_test);
   Py_VISIT(traverse_module_state->__pyx_int_42);
+  Py_VISIT(traverse_module_state->__pyx_int_1000);
   Py_VISIT(traverse_module_state->__pyx_tuple__4);
   Py_VISIT(traverse_module_state->__pyx_codeobj__3);
   Py_VISIT(traverse_module_state->__pyx_codeobj__5);
@@ -2334,6 +2353,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_BaggingClassifier __pyx_mstate_global->__pyx_n_s_BaggingClassifier
 #define __pyx_n_s_DecisionTreeClassifier __pyx_mstate_global->__pyx_n_s_DecisionTreeClassifier
 #define __pyx_n_s_GradientBoostingClassifier __pyx_mstate_global->__pyx_n_s_GradientBoostingClassifier
+#define __pyx_n_s_LogisticRegression __pyx_mstate_global->__pyx_n_s_LogisticRegression
 #define __pyx_n_s_StackingClassifier __pyx_mstate_global->__pyx_n_s_StackingClassifier
 #define __pyx_n_s__2 __pyx_mstate_global->__pyx_n_s__2
 #define __pyx_n_s__6 __pyx_mstate_global->__pyx_n_s__6
@@ -2348,8 +2368,10 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_import __pyx_mstate_global->__pyx_n_s_import
 #define __pyx_n_s_initializing __pyx_mstate_global->__pyx_n_s_initializing
 #define __pyx_n_s_is_coroutine __pyx_mstate_global->__pyx_n_s_is_coroutine
+#define __pyx_n_s_logistic_regression __pyx_mstate_global->__pyx_n_s_logistic_regression
 #define __pyx_n_s_main __pyx_mstate_global->__pyx_n_s_main
 #define __pyx_n_s_makedirs __pyx_mstate_global->__pyx_n_s_makedirs
+#define __pyx_n_s_max_iter __pyx_mstate_global->__pyx_n_s_max_iter
 #define __pyx_n_s_model_ensemble_learning __pyx_mstate_global->__pyx_n_s_model_ensemble_learning
 #define __pyx_kp_s_model_ensemble_learning_pyx __pyx_mstate_global->__pyx_kp_s_model_ensemble_learning_pyx
 #define __pyx_n_s_model_name __pyx_mstate_global->__pyx_n_s_model_name
@@ -2359,16 +2381,18 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_random_state __pyx_mstate_global->__pyx_n_s_random_state
 #define __pyx_kp_s_saved_ensemble_models __pyx_mstate_global->__pyx_kp_s_saved_ensemble_models
 #define __pyx_n_s_sklearn_ensemble __pyx_mstate_global->__pyx_n_s_sklearn_ensemble
+#define __pyx_n_s_sklearn_linear_model __pyx_mstate_global->__pyx_n_s_sklearn_linear_model
 #define __pyx_n_s_sklearn_tree __pyx_mstate_global->__pyx_n_s_sklearn_tree
 #define __pyx_n_s_spec __pyx_mstate_global->__pyx_n_s_spec
 #define __pyx_n_s_test __pyx_mstate_global->__pyx_n_s_test
 #define __pyx_int_42 __pyx_mstate_global->__pyx_int_42
+#define __pyx_int_1000 __pyx_mstate_global->__pyx_int_1000
 #define __pyx_tuple__4 __pyx_mstate_global->__pyx_tuple__4
 #define __pyx_codeobj__3 __pyx_mstate_global->__pyx_codeobj__3
 #define __pyx_codeobj__5 __pyx_mstate_global->__pyx_codeobj__5
 /* #### Code section: module_code ### */
 
-/* "model_ensemble_learning.pyx":8
+/* "model_ensemble_learning.pyx":9
  * 
  * # Get dictionary for classifiers
  * cpdef dict get_classifiers_dictionary():             # <<<<<<<<<<<<<<
@@ -2390,50 +2414,70 @@ static PyObject *__pyx_f_23model_ensemble_learning_get_classifiers_dictionary(CY
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("get_classifiers_dictionary", 1);
 
-  /* "model_ensemble_learning.pyx":10
+  /* "model_ensemble_learning.pyx":11
  * cpdef dict get_classifiers_dictionary():
  *     cdef dict classifiers = {
  *         'gradient_boosting': GradientBoostingClassifier(random_state=42),             # <<<<<<<<<<<<<<
- *         'bagging': BaggingClassifier(random_state=42)
- *     }
+ *         'bagging': BaggingClassifier(random_state=42),
+ *         'logistic_regression': LogisticRegression(random_state=42, max_iter=1000)
  */
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 10, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 11, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_GradientBoostingClassifier); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 10, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_GradientBoostingClassifier); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 11, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 10, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_random_state, __pyx_int_42) < 0) __PYX_ERR(0, 10, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_empty_tuple, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 10, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_gradient_boosting, __pyx_t_4) < 0) __PYX_ERR(0, 10, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-
-  /* "model_ensemble_learning.pyx":11
- *     cdef dict classifiers = {
- *         'gradient_boosting': GradientBoostingClassifier(random_state=42),
- *         'bagging': BaggingClassifier(random_state=42)             # <<<<<<<<<<<<<<
- *     }
- *     return classifiers
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_BaggingClassifier); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 11, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 11, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_random_state, __pyx_int_42) < 0) __PYX_ERR(0, 11, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_empty_tuple, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 11, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_empty_tuple, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 11, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_gradient_boosting, __pyx_t_4) < 0) __PYX_ERR(0, 11, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+
+  /* "model_ensemble_learning.pyx":12
+ *     cdef dict classifiers = {
+ *         'gradient_boosting': GradientBoostingClassifier(random_state=42),
+ *         'bagging': BaggingClassifier(random_state=42),             # <<<<<<<<<<<<<<
+ *         'logistic_regression': LogisticRegression(random_state=42, max_iter=1000)
+ *     }
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_BaggingClassifier); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 12, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 12, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_random_state, __pyx_int_42) < 0) __PYX_ERR(0, 12, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_empty_tuple, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 12, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_bagging, __pyx_t_2) < 0) __PYX_ERR(0, 10, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_bagging, __pyx_t_2) < 0) __PYX_ERR(0, 11, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "model_ensemble_learning.pyx":13
+ *         'gradient_boosting': GradientBoostingClassifier(random_state=42),
+ *         'bagging': BaggingClassifier(random_state=42),
+ *         'logistic_regression': LogisticRegression(random_state=42, max_iter=1000)             # <<<<<<<<<<<<<<
+ *     }
+ *     return classifiers
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_LogisticRegression); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 13, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 13, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_random_state, __pyx_int_42) < 0) __PYX_ERR(0, 13, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_max_iter, __pyx_int_1000) < 0) __PYX_ERR(0, 13, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_empty_tuple, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 13, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_logistic_regression, __pyx_t_4) < 0) __PYX_ERR(0, 11, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_v_classifiers = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "model_ensemble_learning.pyx":13
- *         'bagging': BaggingClassifier(random_state=42)
+  /* "model_ensemble_learning.pyx":15
+ *         'logistic_regression': LogisticRegression(random_state=42, max_iter=1000)
  *     }
  *     return classifiers             # <<<<<<<<<<<<<<
  * 
@@ -2444,7 +2488,7 @@ static PyObject *__pyx_f_23model_ensemble_learning_get_classifiers_dictionary(CY
   __pyx_r = __pyx_v_classifiers;
   goto __pyx_L0;
 
-  /* "model_ensemble_learning.pyx":8
+  /* "model_ensemble_learning.pyx":9
  * 
  * # Get dictionary for classifiers
  * cpdef dict get_classifiers_dictionary():             # <<<<<<<<<<<<<<
@@ -2492,7 +2536,7 @@ static PyObject *__pyx_pf_23model_ensemble_learning_get_classifiers_dictionary(C
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("get_classifiers_dictionary", 1);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_23model_ensemble_learning_get_classifiers_dictionary(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_23model_ensemble_learning_get_classifiers_dictionary(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 9, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -2509,7 +2553,7 @@ static PyObject *__pyx_pf_23model_ensemble_learning_get_classifiers_dictionary(C
   return __pyx_r;
 }
 
-/* "model_ensemble_learning.pyx":17
+/* "model_ensemble_learning.pyx":19
  * 
  * # Save the model in folder
  * cpdef folder_check_model(model_name):             # <<<<<<<<<<<<<<
@@ -2540,21 +2584,21 @@ static PyObject *__pyx_f_23model_ensemble_learning_folder_check_model(PyObject *
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("folder_check_model", 1);
 
-  /* "model_ensemble_learning.pyx":18
+  /* "model_ensemble_learning.pyx":20
  * # Save the model in folder
  * cpdef folder_check_model(model_name):
  *     if not os.path.exists('saved_ensemble_models/{}'.format(model_name)):             # <<<<<<<<<<<<<<
  *         os.makedirs('saved_ensemble_models/{}'.format(model_name))
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_os); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_os); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_path); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_path); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_exists); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_exists); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_kp_s_saved_ensemble_models, __pyx_n_s_format); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_kp_s_saved_ensemble_models, __pyx_n_s_format); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_5 = NULL;
   __pyx_t_6 = 0;
@@ -2574,7 +2618,7 @@ static PyObject *__pyx_f_23model_ensemble_learning_folder_check_model(PyObject *
     PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_v_model_name};
     __pyx_t_3 = __Pyx_PyObject_FastCall(__pyx_t_4, __pyx_callargs+1-__pyx_t_6, 1+__pyx_t_6);
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 18, __pyx_L1_error)
+    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 20, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   }
@@ -2597,26 +2641,26 @@ static PyObject *__pyx_f_23model_ensemble_learning_folder_check_model(PyObject *
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_6, 1+__pyx_t_6);
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 18, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 20, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
-  __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_7 < 0))) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_7 < 0))) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_8 = (!__pyx_t_7);
   if (__pyx_t_8) {
 
-    /* "model_ensemble_learning.pyx":19
+    /* "model_ensemble_learning.pyx":21
  * cpdef folder_check_model(model_name):
  *     if not os.path.exists('saved_ensemble_models/{}'.format(model_name)):
  *         os.makedirs('saved_ensemble_models/{}'.format(model_name))             # <<<<<<<<<<<<<<
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_os); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 19, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_os); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 21, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_makedirs); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 19, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_makedirs); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 21, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_kp_s_saved_ensemble_models, __pyx_n_s_format); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 19, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_kp_s_saved_ensemble_models, __pyx_n_s_format); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 21, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_5 = NULL;
     __pyx_t_6 = 0;
@@ -2636,7 +2680,7 @@ static PyObject *__pyx_f_23model_ensemble_learning_folder_check_model(PyObject *
       PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_v_model_name};
       __pyx_t_2 = __Pyx_PyObject_FastCall(__pyx_t_4, __pyx_callargs+1-__pyx_t_6, 1+__pyx_t_6);
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 19, __pyx_L1_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 21, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
@@ -2659,13 +2703,13 @@ static PyObject *__pyx_f_23model_ensemble_learning_folder_check_model(PyObject *
       __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_3, __pyx_callargs+1-__pyx_t_6, 1+__pyx_t_6);
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 21, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     }
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "model_ensemble_learning.pyx":18
+    /* "model_ensemble_learning.pyx":20
  * # Save the model in folder
  * cpdef folder_check_model(model_name):
  *     if not os.path.exists('saved_ensemble_models/{}'.format(model_name)):             # <<<<<<<<<<<<<<
@@ -2673,7 +2717,7 @@ static PyObject *__pyx_f_23model_ensemble_learning_folder_check_model(PyObject *
  */
   }
 
-  /* "model_ensemble_learning.pyx":17
+  /* "model_ensemble_learning.pyx":19
  * 
  * # Save the model in folder
  * cpdef folder_check_model(model_name):             # <<<<<<<<<<<<<<
@@ -2751,12 +2795,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 17, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 19, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "folder_check_model") < 0)) __PYX_ERR(0, 17, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "folder_check_model") < 0)) __PYX_ERR(0, 19, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -2767,7 +2811,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("folder_check_model", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 17, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("folder_check_model", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 19, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -2803,7 +2847,7 @@ static PyObject *__pyx_pf_23model_ensemble_learning_2folder_check_model(CYTHON_U
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("folder_check_model", 1);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_23model_ensemble_learning_folder_check_model(__pyx_v_model_name, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_23model_ensemble_learning_folder_check_model(__pyx_v_model_name, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -2840,6 +2884,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_BaggingClassifier, __pyx_k_BaggingClassifier, sizeof(__pyx_k_BaggingClassifier), 0, 0, 1, 1},
     {&__pyx_n_s_DecisionTreeClassifier, __pyx_k_DecisionTreeClassifier, sizeof(__pyx_k_DecisionTreeClassifier), 0, 0, 1, 1},
     {&__pyx_n_s_GradientBoostingClassifier, __pyx_k_GradientBoostingClassifier, sizeof(__pyx_k_GradientBoostingClassifier), 0, 0, 1, 1},
+    {&__pyx_n_s_LogisticRegression, __pyx_k_LogisticRegression, sizeof(__pyx_k_LogisticRegression), 0, 0, 1, 1},
     {&__pyx_n_s_StackingClassifier, __pyx_k_StackingClassifier, sizeof(__pyx_k_StackingClassifier), 0, 0, 1, 1},
     {&__pyx_n_s__2, __pyx_k__2, sizeof(__pyx_k__2), 0, 0, 1, 1},
     {&__pyx_n_s__6, __pyx_k__6, sizeof(__pyx_k__6), 0, 0, 1, 1},
@@ -2854,8 +2899,10 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
     {&__pyx_n_s_initializing, __pyx_k_initializing, sizeof(__pyx_k_initializing), 0, 0, 1, 1},
     {&__pyx_n_s_is_coroutine, __pyx_k_is_coroutine, sizeof(__pyx_k_is_coroutine), 0, 0, 1, 1},
+    {&__pyx_n_s_logistic_regression, __pyx_k_logistic_regression, sizeof(__pyx_k_logistic_regression), 0, 0, 1, 1},
     {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
     {&__pyx_n_s_makedirs, __pyx_k_makedirs, sizeof(__pyx_k_makedirs), 0, 0, 1, 1},
+    {&__pyx_n_s_max_iter, __pyx_k_max_iter, sizeof(__pyx_k_max_iter), 0, 0, 1, 1},
     {&__pyx_n_s_model_ensemble_learning, __pyx_k_model_ensemble_learning, sizeof(__pyx_k_model_ensemble_learning), 0, 0, 1, 1},
     {&__pyx_kp_s_model_ensemble_learning_pyx, __pyx_k_model_ensemble_learning_pyx, sizeof(__pyx_k_model_ensemble_learning_pyx), 0, 0, 1, 0},
     {&__pyx_n_s_model_name, __pyx_k_model_name, sizeof(__pyx_k_model_name), 0, 0, 1, 1},
@@ -2865,6 +2912,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_random_state, __pyx_k_random_state, sizeof(__pyx_k_random_state), 0, 0, 1, 1},
     {&__pyx_kp_s_saved_ensemble_models, __pyx_k_saved_ensemble_models, sizeof(__pyx_k_saved_ensemble_models), 0, 0, 1, 0},
     {&__pyx_n_s_sklearn_ensemble, __pyx_k_sklearn_ensemble, sizeof(__pyx_k_sklearn_ensemble), 0, 0, 1, 1},
+    {&__pyx_n_s_sklearn_linear_model, __pyx_k_sklearn_linear_model, sizeof(__pyx_k_sklearn_linear_model), 0, 0, 1, 1},
     {&__pyx_n_s_sklearn_tree, __pyx_k_sklearn_tree, sizeof(__pyx_k_sklearn_tree), 0, 0, 1, 1},
     {&__pyx_n_s_spec, __pyx_k_spec, sizeof(__pyx_k_spec), 0, 0, 1, 1},
     {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
@@ -2882,26 +2930,26 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "model_ensemble_learning.pyx":8
+  /* "model_ensemble_learning.pyx":9
  * 
  * # Get dictionary for classifiers
  * cpdef dict get_classifiers_dictionary():             # <<<<<<<<<<<<<<
  *     cdef dict classifiers = {
  *         'gradient_boosting': GradientBoostingClassifier(random_state=42),
  */
-  __pyx_codeobj__3 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_model_ensemble_learning_pyx, __pyx_n_s_get_classifiers_dictionary, 8, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__3)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __pyx_codeobj__3 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_model_ensemble_learning_pyx, __pyx_n_s_get_classifiers_dictionary, 9, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__3)) __PYX_ERR(0, 9, __pyx_L1_error)
 
-  /* "model_ensemble_learning.pyx":17
+  /* "model_ensemble_learning.pyx":19
  * 
  * # Save the model in folder
  * cpdef folder_check_model(model_name):             # <<<<<<<<<<<<<<
  *     if not os.path.exists('saved_ensemble_models/{}'.format(model_name)):
  *         os.makedirs('saved_ensemble_models/{}'.format(model_name))
  */
-  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_n_s_model_name); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_n_s_model_name); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__4);
   __Pyx_GIVEREF(__pyx_tuple__4);
-  __pyx_codeobj__5 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__4, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_model_ensemble_learning_pyx, __pyx_n_s_folder_check_model, 17, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__5)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __pyx_codeobj__5 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__4, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_model_ensemble_learning_pyx, __pyx_n_s_folder_check_model, 19, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__5)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -2913,6 +2961,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
 static CYTHON_SMALL_CODE int __Pyx_InitConstants(void) {
   if (__Pyx_CreateStringTabAndInitStrings() < 0) __PYX_ERR(0, 1, __pyx_L1_error);
   __pyx_int_42 = PyInt_FromLong(42); if (unlikely(!__pyx_int_42)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_int_1000 = PyInt_FromLong(1000); if (unlikely(!__pyx_int_1000)) __PYX_ERR(0, 1, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -3271,7 +3320,7 @@ if (!__Pyx_RefNanny) {
  * # Libraries
  * from sklearn.ensemble import GradientBoostingClassifier, BaggingClassifier, StackingClassifier             # <<<<<<<<<<<<<<
  * from sklearn.tree import DecisionTreeClassifier
- * import os
+ * from sklearn.linear_model import LogisticRegression
  */
   __pyx_t_2 = PyList_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 2, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -3305,8 +3354,8 @@ if (!__Pyx_RefNanny) {
  * # Libraries
  * from sklearn.ensemble import GradientBoostingClassifier, BaggingClassifier, StackingClassifier
  * from sklearn.tree import DecisionTreeClassifier             # <<<<<<<<<<<<<<
+ * from sklearn.linear_model import LogisticRegression
  * import os
- * 
  */
   __pyx_t_3 = PyList_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 3, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
@@ -3325,48 +3374,69 @@ if (!__Pyx_RefNanny) {
   /* "model_ensemble_learning.pyx":4
  * from sklearn.ensemble import GradientBoostingClassifier, BaggingClassifier, StackingClassifier
  * from sklearn.tree import DecisionTreeClassifier
+ * from sklearn.linear_model import LogisticRegression             # <<<<<<<<<<<<<<
+ * import os
+ * 
+ */
+  __pyx_t_2 = PyList_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 4, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_INCREF(__pyx_n_s_LogisticRegression);
+  __Pyx_GIVEREF(__pyx_n_s_LogisticRegression);
+  if (__Pyx_PyList_SET_ITEM(__pyx_t_2, 0, __pyx_n_s_LogisticRegression)) __PYX_ERR(0, 4, __pyx_L1_error);
+  __pyx_t_3 = __Pyx_Import(__pyx_n_s_sklearn_linear_model, __pyx_t_2, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 4, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_3, __pyx_n_s_LogisticRegression); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 4, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_LogisticRegression, __pyx_t_2) < 0) __PYX_ERR(0, 4, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+
+  /* "model_ensemble_learning.pyx":5
+ * from sklearn.tree import DecisionTreeClassifier
+ * from sklearn.linear_model import LogisticRegression
  * import os             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_2 = __Pyx_ImportDottedModule(__pyx_n_s_os, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 4, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_os, __pyx_t_2) < 0) __PYX_ERR(0, 4, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_3 = __Pyx_ImportDottedModule(__pyx_n_s_os, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 5, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_os, __pyx_t_3) < 0) __PYX_ERR(0, 5, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "model_ensemble_learning.pyx":8
+  /* "model_ensemble_learning.pyx":9
  * 
  * # Get dictionary for classifiers
  * cpdef dict get_classifiers_dictionary():             # <<<<<<<<<<<<<<
  *     cdef dict classifiers = {
  *         'gradient_boosting': GradientBoostingClassifier(random_state=42),
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_23model_ensemble_learning_1get_classifiers_dictionary, 0, __pyx_n_s_get_classifiers_dictionary, NULL, __pyx_n_s_model_ensemble_learning, __pyx_d, ((PyObject *)__pyx_codeobj__3)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 8, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_get_classifiers_dictionary, __pyx_t_2) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_23model_ensemble_learning_1get_classifiers_dictionary, 0, __pyx_n_s_get_classifiers_dictionary, NULL, __pyx_n_s_model_ensemble_learning, __pyx_d, ((PyObject *)__pyx_codeobj__3)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_get_classifiers_dictionary, __pyx_t_3) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "model_ensemble_learning.pyx":17
+  /* "model_ensemble_learning.pyx":19
  * 
  * # Save the model in folder
  * cpdef folder_check_model(model_name):             # <<<<<<<<<<<<<<
  *     if not os.path.exists('saved_ensemble_models/{}'.format(model_name)):
  *         os.makedirs('saved_ensemble_models/{}'.format(model_name))
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_23model_ensemble_learning_3folder_check_model, 0, __pyx_n_s_folder_check_model, NULL, __pyx_n_s_model_ensemble_learning, __pyx_d, ((PyObject *)__pyx_codeobj__5)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 17, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_folder_check_model, __pyx_t_2) < 0) __PYX_ERR(0, 17, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_23model_ensemble_learning_3folder_check_model, 0, __pyx_n_s_folder_check_model, NULL, __pyx_n_s_model_ensemble_learning, __pyx_d, ((PyObject *)__pyx_codeobj__5)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_folder_check_model, __pyx_t_3) < 0) __PYX_ERR(0, 19, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
   /* "model_ensemble_learning.pyx":1
  * # Libraries             # <<<<<<<<<<<<<<
  * from sklearn.ensemble import GradientBoostingClassifier, BaggingClassifier, StackingClassifier
  * from sklearn.tree import DecisionTreeClassifier
  */
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_2) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_3) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
   /*--- Wrapped vars code ---*/
 
