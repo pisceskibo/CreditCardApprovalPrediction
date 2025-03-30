@@ -5,10 +5,12 @@ import streamlit as st
 import joblib
 import datetime
 import re  
+import random
 
 # Module for Image
 from PIL import Image
-from deployment.draw_image_formatter import make_circle
+from streamlit_echarts import st_echarts
+from deployment.draw_image_formatter import make_circle, option_circle_score_credit_card
 
 # Module for Data Preprocessing
 from deployment.profile_credit_card import PersonalInformation, RelationshipInformation, OwnIncome, ExperienceInformation, ContactInformation, ProfileCreditCard
@@ -364,7 +366,7 @@ def profile_application(full_data, train_copy):
     Button Click for Predict
     """
     if predict_bt:
-        final_pred = make_prediction(profile_to_pred_prep)
+        final_pred, probabilities = make_prediction(profile_to_pred_prep)
 
         if final_pred is not None:
             if final_pred[0] == 0:
@@ -374,6 +376,13 @@ def profile_application(full_data, train_copy):
                 st.error("### ❌ You have not been approved for a credit card!")
         else:
             st.error("❗⚠️ Error: Unable to make a prediction.")
+
+        score_credit = round(score_credit_card(probabilities))
+
+        # Display the circle plot for credit card
+        options = option_circle_score_credit_card(score_credit)
+        st.markdown("<h1 style='text-align: center;'>📊 Điểm Tín Dụng 📊</h1>", unsafe_allow_html=True)
+        st_echarts(options=options, height="300px")
 
 
 # Predict for this application (Gradient Boosting Classifier)
@@ -395,10 +404,20 @@ def make_prediction(profile_to_pred_prep):
         print("📊 Probabilities (0, 1):", probabilities)
         print("🎯 Final Prediction:", prediction)
 
-        return prediction
+        return prediction, probabilities
     except FileNotFoundError:
         print("❌ Model file not found!")
         return None
     except Exception as e:
         print(f"❌ An unexpected error occurred: {str(e)}")
         return None
+
+
+# Calculate Score of Credit Card
+def score_credit_card(probabilities):
+    base_score = 100
+    scaling_factor = random.randint(40, 60)
+    print(f"scaling_factor = {scaling_factor}")
+
+    score = base_score + scaling_factor * np.log(probabilities[0][0]/probabilities[0][1])
+    return score
