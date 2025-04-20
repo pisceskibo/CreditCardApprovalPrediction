@@ -21,7 +21,9 @@ cpdef dict get_classifiers_dictionary():
         'random_forest': RandomForestClassifier(random_state=42),
         'extra_trees': ExtraTreesClassifier(random_state=42),
         'stacking': StackingClassifier(estimators=base_estimators, 
-                                        final_estimator=LogisticRegression(random_state=42, max_iter=1000))
+                                        final_estimator=LogisticRegression(random_state=42, max_iter=1000)),
+        'stacking_test': StackingClassifier(estimators=base_estimators, 
+                                        final_estimator=GradientBoostingClassifier(random_state=42))
     }
     return classifiers
 
