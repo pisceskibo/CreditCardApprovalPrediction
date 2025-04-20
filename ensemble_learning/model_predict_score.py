@@ -1,8 +1,9 @@
 # Libraries
 from pathlib import Path
 from sklearn.model_selection import cross_val_predict
-from sklearn.metrics import classification_report
+from sklearn.metrics import classification_report, ConfusionMatrixDisplay
 from sklearn.calibration import CalibratedClassifierCV
+import matplotlib.pyplot as plt
 import joblib
 
 
@@ -82,3 +83,35 @@ def score_func(model_trn, model_name, X_cc_train_prep, y_cc_train_prep, final_mo
                                                                                       X_cc_train_prep, y_cc_train_prep,
                                                                                       final_model=True))
         print(class_report_final)
+
+
+# Plot the Confusion Matrix
+def confusion_matrix_func(model_trn, model_name, X_cc_train_prep, y_cc_train_prep, final_model=False):
+    if final_model == False:
+        # Plot confusion matrix
+        fig, ax = plt.subplots(figsize=(8, 8))
+        conf_matrix = ConfusionMatrixDisplay.from_predictions(y_cc_train_prep,
+                                                              y_prediction_func(model_trn, model_name,
+                                                                                X_cc_train_prep, y_cc_train_prep),
+                                                              ax=ax, cmap='Blues', values_format='d')
+        # Show the plot
+        plt.grid(visible=None)
+        plt.xlabel('Predicted label', fontsize=14)
+        plt.ylabel('True label', fontsize=14)
+        plt.title('Confusion Matrix', fontsize=14)
+        plt.show()
+        print('\n')
+    else:
+        # Plot confusion matrix
+        fig, ax = plt.subplots(figsize=(8,8))
+        conf_matrix_final = ConfusionMatrixDisplay.from_predictions(y_cc_train_prep,
+                                                                    y_prediction_func(model_trn, model_name,
+                                                                                      X_cc_train_prep, y_cc_train_prep, final_model=True),
+                                                                    ax=ax, cmap='Blues', values_format='d')
+        # Show the plot
+        plt.grid(visible=None)
+        plt.xlabel('Predicted label', fontsize=14)
+        plt.ylabel('True label', fontsize=14)
+        plt.title('Confusion Matrix', fontsize=14)
+        plt.show()
+        print('\n')
