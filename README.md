@@ -9,6 +9,7 @@
 6. Model Selection
 7. Deploy Models in Streamlit
 
+### Bảng biểu chú thích:
 | File | Folder sử dụng | Chức năng |
 |-|-|-|
 | `CreditCard.ipynb` | `machine_learning/` | Analysis |
