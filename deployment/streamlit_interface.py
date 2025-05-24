@@ -4,8 +4,7 @@ import pandas as pd
 import streamlit as st
 import joblib
 import datetime
-import re  
-import random
+import re
 
 # Module for Image
 from PIL import Image
@@ -416,8 +415,8 @@ def make_prediction(profile_to_pred_prep):
 # Calculate Score of Credit Card
 def score_credit_card(probabilities):
     base_score = 100
-    scaling_factor = random.randint(40, 60)
-    print(f"scaling_factor = {scaling_factor}")
+    scaling_factor = 50 / np.log(2)
+    print(f"scaling_factor = PD0 / ln(2) = {scaling_factor}")
 
     score = base_score + scaling_factor * np.log(probabilities[0][0]/probabilities[0][1])
     return score
