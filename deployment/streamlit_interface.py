@@ -388,7 +388,8 @@ def profile_application(full_data, train_copy):
 def make_prediction(profile_to_pred_prep):
     try:
         # Load model in local
-        model_path = "saved_models/gradient_boosting/gradient_boosting_model.sav"
+        # model_path = "saved_models/gradient_boosting/gradient_boosting_model.sav"
+        model_path = "saved_ensemble_models/stacking_test/stacking_test_model.sav"
         model = joblib.load(model_path)
         print("✅ Model loaded successfully!")
 

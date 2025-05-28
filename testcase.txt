@@ -1,2 +1,16 @@
+# Gradient Boosting Classifier
 Approval: 0 (22 tuổi) - Default value
 Disapproval: 252521 (42 tuổi)
+
+# Gradient Stacking Classifier
+Approval: mặc định (Default value)
+Disapproval:
++ Gender: Female 
++ Age: 1955 (70 tuổi)
++ Marital status: Married 
++ Family member count: 6 people
++ Dwelling type: House/apartment
++ Income: 0 USD
++ Ownship/Phone/Email: No
++ Employment: Pensioner (0 length)
++ Education level: Academic degree
